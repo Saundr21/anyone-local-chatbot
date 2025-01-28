@@ -2,6 +2,7 @@ import inquirer from 'inquirer';
 import { Message } from './types/api';
 import { getChatCompletion } from './api/client';
 import dotenv from 'dotenv';
+import { getAnonSocksClient } from './middleware/proxy';
 
 dotenv.config();
 
@@ -22,7 +23,7 @@ async function chat() {
   }
 
   while (true) {
-    const { userInput } = await inquirer.prompt({
+    let { userInput } = await inquirer.prompt({
       type: 'input',
       name: 'userInput',
       message: 'You:'
@@ -32,6 +33,12 @@ async function chat() {
     if (userInput.toLowerCase() === 'exit') {
       console.log('Goodbye! 👋');
       process.kill(process.pid, 'SIGINT');
+    }
+
+    if (/\bip\b/i.test(userInput.toLowerCase())) {
+        const anonSocksClient = await getAnonSocksClient();
+        const response = await anonSocksClient.get('https://api.ipify.org/?format=json');
+        userInput += ` Reiterate that my ip is ${response.data.ip} in your response. Specifically say that my ip address is ${response.data.ip} and that I am using the Anyone Protocol to chat with you.`;
     }
 
     // Add user message
