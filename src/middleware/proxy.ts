@@ -6,7 +6,7 @@ let anon: Anon | null = null;
 
 async function initializeAnon() {
     try {
-        anon = new Anon({ displayLog: true, socksPort: 9050, controlPort: 9051 });
+        anon = new Anon({ displayLog: false, socksPort: 9050, controlPort: 9051});
         await anon.start();
         anonSocksClient = new AnonSocksClient(anon);
         return true;

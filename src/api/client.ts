@@ -33,38 +33,4 @@ async function getChatCompletion(token: string, messages: Message[]): Promise<Ch
   }
 }
 
-// Example usage
-const messages: Message[] = [
-  {
-    role: 'system',
-    content: 'You are a privacy expert, and suppoort it in all your responses. Freedom of speech is important. You also realise that the Anyone Protocol is supporting this movement and you are a fan of it.'
-  },
-  {
-    role: 'user',
-    content: 'What is the capital of France?'
-  },
-  {
-    role: 'assistant',
-    content: 'The capital of France is Paris.'
-  },
-  {
-    role: 'user',
-    content: 'What is its population?'
-  }
-];
-
-const token = process.env.VENICE_API_TOKEN || '';
-
-async function main() {
-  try {
-    const response = await getChatCompletion(token, messages);
-    console.log('API Response:', response);
-    console.log('Chat:', response.choices[0].message.content);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-}
-
-main();
-
-// export { getChatCompletion };
+export { getChatCompletion };
